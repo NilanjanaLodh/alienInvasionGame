@@ -10,9 +10,8 @@ class Settings():
         self.bullet_size = 20
         self.bullet_color = (200, 50, 50) ###pinkish
 
-
         self.alien_speed = 0.3
-        self.alien_drop_speed = 15
+        self.alien_drop_speed = 10
         self.alien_direction = 1
         self.alien_width = 64
         self.alien_height = 64

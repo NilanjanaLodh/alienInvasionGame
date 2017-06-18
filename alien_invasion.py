@@ -8,6 +8,9 @@ from pygame.sprite import Group
 from gameStats import GameStats
 from time import sleep
 
+WHITE = (255, 255, 255)
+
+
 class AlienGame:
     def __init__(self):
         pygame.init()
@@ -21,7 +24,6 @@ class AlienGame:
 
     def run_game(self):
         self.create_fleet()
-
         while True:
             self.check_events()
             self.ship.update_motion()
@@ -71,6 +73,8 @@ class AlienGame:
             self.fire_bullet()
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_h:
+            self.display_help()
 
     def check_keyup_events(self, event):
         if self.ship.moving_right:
@@ -108,7 +112,7 @@ class AlienGame:
                 self.change_alien_fleet_direction()
                 break
         self.aliens.update()
-        if pygame.sprite.spritecollideany(self.ship,self.aliens):
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
             print("ship hit")
             self.ship_hit()
 
@@ -128,13 +132,12 @@ class AlienGame:
 
         if self.stats.lives_left == 0:
             self.game_over()
-
-        sleep(0.5)
+        else:
+            self.display_lives_left()
 
     def game_over(self):
-        WHITE = (255, 255, 255)
         print("game over")
-        font = pygame.font.Font(None,100)
+        font = pygame.font.Font(None, 100)
         text = font.render("GAME OVER", True, WHITE)
         text_rect = text.get_rect()
         text_x = self.screen.get_width() // 2 - text_rect.width / 2
@@ -155,4 +158,35 @@ class AlienGame:
         self.stats.reset()
         self.run_game()
 
+    def display_help(self):
+        font = pygame.font.Font(None, 36)
+        str = "  H:Help  ,  Q:quit  ,   P:Play again "
+        text = font.render(str, True, WHITE)
+        text_rect = text.get_rect()
+        text_x = self.screen.get_width() // 2 - text_rect.width / 2
+        text_y = self.screen.get_height() // 2 - text_rect.height / 2
+        self.screen.blit(text, [text_x, text_y])
+        pygame.display.flip()
 
+        nopress = True
+        while nopress:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    nopress = False
+                    break
+
+    def display_lives_left(self):
+        font = pygame.font.Font(None, 36)
+        if self.stats.lives_left > 1 :
+            s = str(self.stats.lives_left) + " lives left!"
+        else:
+            s = "Last life!!!"
+        text = font.render(s, True, WHITE)
+        text_rect = text.get_rect()
+        text_x = self.screen.get_width() // 2 - text_rect.width / 2
+        text_y = self.screen.get_height() // 2 - text_rect.height / 2
+        self.screen.blit(text, [text_x, text_y])
+        pygame.display.flip()
+        sleep(1)
