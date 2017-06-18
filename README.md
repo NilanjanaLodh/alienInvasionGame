@@ -24,5 +24,9 @@ Game Play
  - Press **Q** to quit
  - Press **H** for help
  - Press **P** to start playing a new game after Game Over
- 
+ - When a bullet hits an alien, it dies
+ - If an alien hits the ship, you lose a life.
 
+Changing settings
+------------- 
+To change a setting you don't like, change the respective value in settings.py
