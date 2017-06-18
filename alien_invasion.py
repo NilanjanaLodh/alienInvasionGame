@@ -156,5 +156,3 @@ class AlienGame:
         self.run_game()
 
 
-g = AlienGame()
-g.run_game()
